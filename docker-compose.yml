@@ -1,0 +1,11 @@
+services:
+  psydraw:
+    build: .
+    container_name: psydraw
+    env_file: .env
+    volumes:
+      - ./example:/app/example:ro
+      - ./report:/app/report
+      - ./.cache:/app/.cache
+    stdin_open: true
+    tty: true

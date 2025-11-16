@@ -86,9 +86,8 @@ pip install -r requirements.txt
 
 <p align="center">
   <img src="https://img.shields.io/badge/1-Direct%20Invocation-orange?style=for-the-badge" alt="Direct">
-  <img src="https://img.shields.io/badge/2-API%20Integration-orange?style=for-the-badge" alt="API">
-  <img src="https://img.shields.io/badge/3-Web%20Demo-orange?style=for-the-badge" alt="Web">
-  <img src="https://img.shields.io/badge/4-Package%20App-orange?style=for-the-badge" alt="Package">
+  <img src="https://img.shields.io/badge/2-Docker-orange?style=for-the-badge" alt="Docker">
+  <img src="https://img.shields.io/badge/3-Package%20App-orange?style=for-the-badge" alt="Package">
 </p>
 
 #### 1. Direct Invocation
@@ -98,20 +97,23 @@ bash run.sh
 python run.py --image_file example/example1.png --save_path example/example1_result.json --language en
 ```
 
-#### 2. API Integration
+#### 2. Docker (Recommended)
 ```bash
-python deploy.py --port 9557
-```
-Service runs on `http://127.0.0.1:9557`
+# Quick start - does everything automatically
+make all
 
-#### 3. Web Demo
-```bash
-bash web_demo.sh
-# or
-streamlit run src/main.py
+# Or manually:
+make setup  # Initial setup
+# Edit .env and add your GOOGLE_API_KEY
+make build  # Build Docker image
+make up     # Start container
+make test-htp  # Run tests
+
+# Run analysis
+docker compose exec psydraw python run.py --image_file example/example1.jpg --save_path report/output.json --language en
 ```
 
-#### 4. Package Application
+#### 3. Package Application
 ```bash
 pyinstaller htp_analyzer.spec
 ```

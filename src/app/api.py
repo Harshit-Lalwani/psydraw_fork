@@ -9,6 +9,11 @@ def create_app(model):
         description = "A simple web application that uses the House-Tree-Person test to analyze an image.",
     )
 
+    @app.get("/health", status_code=status.HTTP_200_OK)
+    async def health_check():
+        """Health check endpoint for monitoring service availability."""
+        return {"status": "healthy", "service": "HTP Test API"}
+
     @app.post("/v1/predict", response_model=HTPOutput, status_code=status.HTTP_200_OK)
     async def predict(data: HTPInput):
         try:

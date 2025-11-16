@@ -261,6 +261,69 @@ class HTPModel(object):
         else:
             return True
         
+    def person_final_report(self, person_features: str, person_analysis: str):
+        """Generates the final, formatted report for the Person drawing."""
+        logger.info("Generating final Person report.")
+        final_report_prompt_text = open(f"src/prompt/{self.language}/person_final_report.txt", "r", encoding="utf-8").read()
+        
+        prompt = ChatPromptTemplate.from_messages([
+            ("system", final_report_prompt_text),
+            (
+                "user",
+                "VISUAL FEATURES:\n{features}\n\nPSYCHOLOGICAL INTERPRETATIONS:\n{analysis}"
+            )
+        ])
+        
+        chain = prompt | self.text_model
+        response = chain.invoke({
+            "features": person_features,
+            "analysis": person_analysis
+        })
+        result = response.content
+        self.update_usage(response)
+        
+        logger.info("Final Person report generated.")
+        return result
+
+    def pluto_workflow(self, image_path: str, language: str = "en"):
+        """
+        A streamlined workflow for the PLUTO project that analyzes ONLY the Person drawing.
+        It returns a structured report with blank fields for House and Tree.
+        """
+        self.refresh_usage()
+        self.language = language
+
+        # 1. Analyze only the Person drawing (Feature Extraction and Interpretation)
+        logger.info("Starting PLUTO workflow for Person analysis.")
+        person_features, person_analysis = self.basic_analysis(image_path, "person")
+
+        # 2. Generate the final, formatted report using the new prompt
+        final_report_content = self.person_final_report(person_features, person_analysis)
+
+        # 3. Assemble the final output object in the desired format
+        # This keeps the output structure consistent with the original, but with blank data.
+        blank_analysis = {"feature": "Not analyzed.", "analysis": "Not applicable."}
+        
+        results = {
+            "overall": blank_analysis,
+            "house": blank_analysis,
+            "tree": blank_analysis,
+            "person": {
+                "feature": person_features,
+                "analysis": person_analysis
+            },
+            "merge": "Not applicable for Person-only analysis.",
+            "final": final_report_content, # This is your main output!
+            "signal": "Please review the final report for a qualitative summary.",
+            "classification": None, # Classification is not performed in this simplified flow
+            "fix_signal": None,
+            "usage": self.usage
+        }
+        
+        logger.info("PLUTO workflow completed.")
+        return results
+
+    # Keep the original workflow method in case you need it, but your project will call pluto_workflow
     def workflow(self, image_path: str, language: str = "en"):
         self.refresh_usage()
         # update language

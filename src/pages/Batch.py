@@ -11,7 +11,7 @@ from docx import Document
 from langchain_google_genai import ChatGoogleGenerativeAI
 from PIL import Image
 
-from model_langchain import HTPModel
+from src.model_langchain import HTPModel
 
 SUPPORTED_LANGUAGES = {
     "English": "en"
@@ -66,38 +66,34 @@ LANGUAGES = {
     "welcome": "Welcome to the Batch Analysis Page",
     "batch_results": "Batch Analysis Finished, Please download the results. Successful: {} | Failed: {}",
     "download_batch_results": "Download Batch Results (ZIP)",
-        \"ai_disclaimer\": \"NOTE: AI-generated content, for reference only. Not a substitute for medical diagnosis.\",\n    }\n}
-        "analysis_settings": "分析设置",
-        "model_settings": "🍓 模型设置",
-        "batch_title": "📊 批量分析",
-        "language_label": "语言：",
-        "select_folder": "输入包含图片的文件夹路径：",
-        "no_images_found": "在选定的文件夹中未找到图片文件。",
-        "images_found": "找到 {} 个图片文件，点击**开始批量分析**按钮可以开始分析。",
-        "start_batch_analysis": "开始批量分析",
-        "batch_results_summary": "批量分析结果摘要",
-        "download_batch_results": "下载批量结果",
-        "enter_valid_folder": "请上传图片。",
-        "error_no_api_key": "❌ 请在开始分析之前在侧边栏输入您的API密钥。",
-        "batch_instructions_title": "📋 批量分析说明",
-        "batch_instructions": """
-        **在进行批量分析之前，请仔细阅读以下说明：**
-
-        1. **API密钥**：确保您已在侧边栏填写了API密钥。这对分析能否进行至关重要。
-        
-        2. **准备工作**：
-        - 在您的本地设备上准备好要分析的图片。
-        - 确保所有图片格式为.jpg、.jpeg或.png。
-        
-        3. **图片上传**：
-        - 点击"上传图片"按钮或将图片拖放到指定区域。
-        - 您可以一次选择多张图片进行批量处理。
-        
-        4. **时间考虑**：批量分析可能需要相当长的时间，具体取决于图片的数量和大小。请耐心等待。
-        
-        5. **网络和API额度**：
-         # Chinese removed — English only
+    "ai_disclaimer": "NOTE: AI-generated content, for reference only. Not a substitute for medical diagnosis.",
     }
+}
+
+def get_text(key):
+    """Get text from language dictionary based on session state language_code."""
+    return LANGUAGES[st.session_state['language_code']][key]
+
+@st.cache_data
+def get_uploaded_files():
+    return []
+
+def pil_to_base64(image: Image.Image, format: str = "JPEG") -> str:
+    """Convert PIL image to base64 string."""
+    buffered = BytesIO()
+    image.save(buffered, format=format)
+    return base64.b64encode(buffered.getvalue()).decode('utf-8')
+
+def save_results(results):
+    """Save analysis results to a ZIP file."""
+    with tempfile.TemporaryDirectory() as temp_dir:
+        result_folder = os.path.join(temp_dir, "results")
+        os.makedirs(result_folder, exist_ok=True)
+        
+        for result in results:
+            file_name_without_ext = os.path.splitext(result['file_name'])[0]
+            doc = Document()
+            doc.add_heading(f"Analysis Report: {result['file_name']}", 0)
             if result['success']:
                 doc.add_paragraph(get_text("ai_disclaimer"))
                 if result['analysis_result']['classification'] is True:

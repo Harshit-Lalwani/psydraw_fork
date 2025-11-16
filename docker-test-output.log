@@ -1,0 +1,164 @@
+🚀 PsyDraw Docker Setup
+=======================
+
+✅ Docker is installed: Docker version 28.5.2, build ecc6942
+✅ Docker daemon is running
+✅ Docker Compose is available: Docker Compose version v2.40.3-desktop.1
+
+✅ .env file already exists
+
+🏗️  Building Docker images (this may take a few minutes)...
+#1 [internal] load local bake definitions
+#1 reading from stdin 999B done
+#1 DONE 0.0s
+
+#2 [api internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.06kB done
+#2 DONE 0.0s
+
+#3 [web internal] load metadata for docker.io/library/python:3.11-slim
+#3 ...
+
+#4 [auth] library/python:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#3 [web internal] load metadata for docker.io/library/python:3.11-slim
+#3 DONE 1.7s
+
+#5 [web internal] load .dockerignore
+#5 transferring context: 212B done
+#5 DONE 0.0s
+
+#6 [web 1/8] FROM docker.io/library/python:3.11-slim@sha256:e4676722fba839e2e5cdb844a52262b43e90e56dbd55b7ad953ee3615ad7534f
+#6 resolve docker.io/library/python:3.11-slim@sha256:e4676722fba839e2e5cdb844a52262b43e90e56dbd55b7ad953ee3615ad7534f done
+#6 DONE 0.0s
+
+#7 [web internal] load build context
+#7 transferring context: 8.35kB done
+#7 DONE 0.0s
+
+#8 [api 2/8] WORKDIR /app
+#8 CACHED
+
+#9 [api 3/8] RUN apt-get update && apt-get install -y --no-install-recommends     build-essential     libglib2.0-0     libsm6     libxrender1     libxext6     curl     && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [api 4/8] COPY requirements.txt /app/requirements.txt
+#10 CACHED
+
+#11 [api 5/8] RUN pip install --upgrade pip && pip install --no-cache-dir -r /app/requirements.txt
+#11 0.983 Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (24.0)
+#11 1.082 Collecting pip
+#11 1.179   Downloading pip-25.3-py3-none-any.whl.metadata (4.7 kB)
+#11 1.208 Downloading pip-25.3-py3-none-any.whl (1.8 MB)
+#11 1.701    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 3.8 MB/s eta 0:00:00
+#11 1.740 Installing collected packages: pip
+#11 1.740   Attempting uninstall: pip
+#11 1.742     Found existing installation: pip 24.0
+#11 1.762     Uninstalling pip-24.0:
+#11 1.848       Successfully uninstalled pip-24.0
+#11 2.311 Successfully installed pip-25.3
+#11 2.311 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#11 2.939 Collecting fastapi==0.115.0 (from -r /app/requirements.txt (line 1))
+#11 3.095   Downloading fastapi-0.115.0-py3-none-any.whl.metadata (27 kB)
+#11 3.200 Collecting langchain_community==0.3.0 (from -r /app/requirements.txt (line 2))
+#11 3.233   Downloading langchain_community-0.3.0-py3-none-any.whl.metadata (2.8 kB)
+#11 3.308 Collecting langchain_core==0.3.15 (from -r /app/requirements.txt (line 3))
+#11 3.335   Downloading langchain_core-0.3.15-py3-none-any.whl.metadata (6.3 kB)
+#11 3.364 Collecting langchain_google_genai==2.0.6 (from -r /app/requirements.txt (line 4))
+#11 3.392   Downloading langchain_google_genai-2.0.6-py3-none-any.whl.metadata (3.6 kB)
+#11 3.564 Collecting numpy==1.26.0 (from -r /app/requirements.txt (line 5))
+#11 3.590   Downloading numpy-1.26.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (58 kB)
+#11 3.648 Collecting google-generativeai==0.8.3 (from -r /app/requirements.txt (line 6))
+#11 3.675   Downloading google_generativeai-0.8.3-py3-none-any.whl.metadata (3.9 kB)
+#11 3.857 Collecting Pillow==10.4.0 (from -r /app/requirements.txt (line 7))
+#11 3.886   Downloading pillow-10.4.0-cp311-cp311-manylinux_2_28_aarch64.whl.metadata (9.2 kB)
+#11 4.023 Collecting pydantic==2.9.2 (from -r /app/requirements.txt (line 8))
+#11 4.048   Downloading pydantic-2.9.2-py3-none-any.whl.metadata (149 kB)
+#11 4.110 Collecting python_docx==1.1.2 (from -r /app/requirements.txt (line 9))
+#11 4.143   Downloading python_docx-1.1.2-py3-none-any.whl.metadata (2.0 kB)
+#11 4.191 Collecting Requests==2.32.3 (from -r /app/requirements.txt (line 10))
+#11 4.217   Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+#11 4.264 Collecting streamlit==1.36.0 (from -r /app/requirements.txt (line 11))
+#11 4.297   Downloading streamlit-1.36.0-py2.py3-none-any.whl.metadata (8.5 kB)
+#11 4.318 Collecting streamlit_drawable_canvas==0.9.3 (from -r /app/requirements.txt (line 12))
+#11 4.343   Downloading streamlit_drawable_canvas-0.9.3-py3-none-any.whl.metadata (8.8 kB)
+#11 4.380 Collecting uvicorn==0.30.6 (from -r /app/requirements.txt (line 13))
+#11 4.412   Downloading uvicorn-0.30.6-py3-none-any.whl.metadata (6.6 kB)
+#11 4.478 Collecting pyinstaller (from -r /app/requirements.txt (line 14))
+#11 4.506   Downloading pyinstaller-6.16.0-py3-none-manylinux2014_aarch64.whl.metadata (8.5 kB)
+#11 4.530 Collecting python-dotenv (from -r /app/requirements.txt (line 15))
+#11 4.560   Downloading python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+#11 4.607 Collecting starlette<0.39.0,>=0.37.2 (from fastapi==0.115.0->-r /app/requirements.txt (line 1))
+#11 4.637   Downloading starlette-0.38.6-py3-none-any.whl.metadata (6.0 kB)
+#11 4.686 Collecting typing-extensions>=4.8.0 (from fastapi==0.115.0->-r /app/requirements.txt (line 1))
+#11 4.713   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+#11 4.729 Collecting annotated-types>=0.6.0 (from pydantic==2.9.2->-r /app/requirements.txt (line 8))
+#11 4.754   Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+#11 5.753 Collecting pydantic-core==2.23.4 (from pydantic==2.9.2->-r /app/requirements.txt (line 8))
+#11 5.782   Downloading pydantic_core-2.23.4-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (6.6 kB)
+#11 5.849 Collecting PyYAML>=5.3 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 5.879   Downloading pyyaml-6.0.3-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.4 kB)
+#11 6.163 Collecting SQLAlchemy<3,>=1.4 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 6.197   Downloading sqlalchemy-2.0.44-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (9.5 kB)
+#11 6.752 Collecting aiohttp<4.0.0,>=3.8.3 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 6.780   Downloading aiohttp-3.13.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (8.1 kB)
+#11 6.813 Collecting dataclasses-json<0.7,>=0.5.7 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 6.837   Downloading dataclasses_json-0.6.7-py3-none-any.whl.metadata (25 kB)
+#11 6.949 Collecting langchain<0.4.0,>=0.3.0 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 6.971   Downloading langchain-0.3.27-py3-none-any.whl.metadata (7.8 kB)
+#11 7.108 Collecting langsmith<0.2.0,>=0.1.112 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 7.137   Downloading langsmith-0.1.147-py3-none-any.whl.metadata (14 kB)
+#11 7.170 Collecting pydantic-settings<3.0.0,>=2.4.0 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 7.204   Downloading pydantic_settings-2.12.0-py3-none-any.whl.metadata (3.4 kB)
+#11 7.230 Collecting tenacity!=8.4.0,<9.0.0,>=8.1.0 (from langchain_community==0.3.0->-r /app/requirements.txt (line 2))
+#11 7.257   Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+#11 7.288 Collecting jsonpatch<2.0,>=1.33 (from langchain_core==0.3.15->-r /app/requirements.txt (line 3))
+#11 7.313   Downloading jsonpatch-1.33-py2.py3-none-any.whl.metadata (3.0 kB)
+#11 7.356 Collecting packaging<25,>=23.2 (from langchain_core==0.3.15->-r /app/requirements.txt (line 3))
+#11 7.384   Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+#11 7.501 Collecting charset-normalizer<4,>=2 (from Requests==2.32.3->-r /app/requirements.txt (line 10))
+#11 7.533   Downloading charset_normalizer-3.4.4-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (37 kB)
+#11 7.563 Collecting idna<4,>=2.5 (from Requests==2.32.3->-r /app/requirements.txt (line 10))
+#11 7.587   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+#11 7.621 Collecting urllib3<3,>=1.21.1 (from Requests==2.32.3->-r /app/requirements.txt (line 10))
+#11 7.647   Downloading urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)
+#11 7.671 Collecting certifi>=2017.4.17 (from Requests==2.32.3->-r /app/requirements.txt (line 10))
+#11 7.697   Downloading certifi-2025.11.12-py3-none-any.whl.metadata (2.5 kB)
+#11 7.716 Collecting filetype<2.0.0,>=1.2.0 (from langchain_google_genai==2.0.6->-r /app/requirements.txt (line 4))
+#11 7.741   Downloading filetype-1.2.0-py2.py3-none-any.whl.metadata (6.5 kB)
+#11 7.798 Collecting google-ai-generativelanguage==0.6.10 (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 7.826   Downloading google_ai_generativelanguage-0.6.10-py3-none-any.whl.metadata (5.6 kB)
+#11 7.865 Collecting google-api-core (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 7.891   Downloading google_api_core-2.28.1-py3-none-any.whl.metadata (3.3 kB)
+#11 7.952 Collecting google-api-python-client (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 7.980   Downloading google_api_python_client-2.187.0-py3-none-any.whl.metadata (7.0 kB)
+#11 8.022 Collecting google-auth>=2.15.0 (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 8.049   Downloading google_auth-2.43.0-py2.py3-none-any.whl.metadata (6.6 kB)
+#11 8.210 Collecting protobuf (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 8.236   Downloading protobuf-6.33.1-cp39-abi3-manylinux2014_aarch64.whl.metadata (593 bytes)
+#11 8.268 Collecting tqdm (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 8.298   Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+#11 8.590 Collecting lxml>=3.1.0 (from python_docx==1.1.2->-r /app/requirements.txt (line 9))
+#11 8.616   Downloading lxml-6.0.2-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (3.6 kB)
+#11 8.642 Collecting altair<6,>=4.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 8.668   Downloading altair-5.5.0-py3-none-any.whl.metadata (11 kB)
+#11 8.695 Collecting blinker<2,>=1.0.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 8.724   Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+#11 8.745 Collecting cachetools<6,>=4.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 8.771   Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+#11 8.797 Collecting click<9,>=7.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 8.823   Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+#11 8.959 Collecting pandas<3,>=1.3.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 8.986   Downloading pandas-2.3.3-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (91 kB)
+#11 9.044 Collecting protobuf (from google-generativeai==0.8.3->-r /app/requirements.txt (line 6))
+#11 9.076   Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_aarch64.whl.metadata (592 bytes)
+#11 9.170 Collecting pyarrow>=7.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 9.195   Downloading pyarrow-22.0.0-cp311-cp311-manylinux_2_28_aarch64.whl.metadata (3.2 kB)
+#11 9.245 Collecting rich<14,>=10.14.0 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 9.272   Downloading rich-13.9.4-py3-none-any.whl.metadata (18 kB)
+#11 9.296 Collecting toml<2,>=0.10.1 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 9.322   Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+#11 9.361 Collecting gitpython!=3.1.19,<4,>=3.0.7 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))
+#11 9.389   Downloading gitpython-3.1.45-py3-none-any.whl.metadata (13 kB)
+#11 9.414 Collecting pydeck<1,>=0.8.0b4 (from streamlit==1.36.0->-r /app/requirements.txt (line 11))

@@ -31,11 +31,12 @@ multimodal_model = ChatGoogleGenerativeAI(
 model = HTPModel(
     text_model=text_model,
     multimodal_model=multimodal_model,
-    language="zh",
+    language="en",  # Changed from "zh" to "en" - model only supports English
     use_cache=True
 )
 
 config = get_parse()
 
 app = create_app(model)
-uvicorn.run(app, host="127.0.0.1", port=config.port, log_level="info")
+# Bind to all interfaces so the API is reachable from Docker networks
+uvicorn.run(app, host="0.0.0.0", port=config.port, log_level="info")

@@ -4,13 +4,12 @@ from io import BytesIO
 
 import requests
 import streamlit as st
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from PIL import Image
 
-from model_langchain import HTPModel
+from src.model_langchain import HTPModel
 
 # Constants
-BASE_URL = "https://api.openai.com/v1"
 MAX_IMAGE_SIZE = (800, 800)
 
 # Supported languages and their codes
@@ -35,7 +34,7 @@ LANGUAGES = {
         "instructions": """
             **Please read the following instructions carefully:**
 
-            1. **Fill the API Key**: Fill the API Key in the sidebar to authenticate with the OpenAI API.
+            1. **Fill the API Key**: Fill the API Key in the sidebar to authenticate with the Google Gemini API.
             2. **Drawing Requirements**: On a piece of white paper, use a pencil to draw a picture that includes a **house**, **trees**, and a **person**.
             3. **Be Creative**: Feel free to draw as you like. There are no right or wrong drawings.
             4. **No Aids**: Do not use rulers, erasers, or any drawing aids.
@@ -182,10 +181,8 @@ def sidebar(model) -> None:
         st.session_state['image_display'] = image  # For displaying in main content
     
     st.sidebar.markdown(f"## {get_text('model_settings')}")
-    base_url = st.sidebar.text_input("API Base URL", value=BASE_URL, help="Base URL of the API server")
-    api_key = st.sidebar.text_input("API Key", help="API Key for authentication", type="password")
+    api_key = st.sidebar.text_input("Google Gemini API Key", help="API Key for authentication", type="password")
     st.session_state.api_key = api_key
-    st.session_state.base_url = base_url
     
     # Buttons
     st.sidebar.markdown("---")
@@ -243,9 +240,7 @@ def main() -> None:
         
     # Initialize session state variables if not present
     if 'api_key' not in st.session_state:
-        st.session_state['api_key'] = os.getenv("OPENAI_API_KEY") or ""
-    if 'base_url' not in st.session_state:
-        st.session_state['base_url'] = os.getenv("OPENAI_BASE_URL") or BASE_URL 
+        st.session_state['api_key'] = os.getenv("GOOGLE_API_KEY") or "" 
     if 'language' not in st.session_state:
         st.session_state['language'] = 'English'
     if 'language_code' not in st.session_state:
@@ -255,22 +250,18 @@ def main() -> None:
             st.session_state[key] = None
             
     # Initialize model
-    MULTIMODAL_MODEL = "gpt-4o-2024-08-06"
-    TEXT_MODEL = "claude-3-5-sonnet-20240620"
+    MULTIMODAL_MODEL = "gemini-2.5-flash"
+    TEXT_MODEL = "gemini-2.5-flash"
     
-    text_model = ChatOpenAI(
-        api_key=st.session_state.api_key,
-        base_url=st.session_state.base_url,
+    text_model = ChatGoogleGenerativeAI(
         model=TEXT_MODEL,
         temperature=0.2,
-        top_p=0.75,
+        google_api_key=st.session_state.api_key,
     )
-    multimodal_model = ChatOpenAI(
-        api_key=st.session_state.api_key,
-        base_url=st.session_state.base_url,
+    multimodal_model = ChatGoogleGenerativeAI(
         model=MULTIMODAL_MODEL,
         temperature=0.2,
-        top_p=0.75,
+        google_api_key=st.session_state.api_key,
     )
     model = HTPModel(
         text_model=text_model,
